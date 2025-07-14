@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Virtualization Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <div class="cube"></div>
+                    <div class="cube"></div>
+                    <div class="cube"></div>
+                </div>
+                <h1>Virtualization Simulator</h1>
+            </div>
+            <div class="header-controls">
+                <button id="dark-mode-toggle" class="toggle-btn">
+                    <div class="toggle-icon"></div>
+                    <span>Theme</span>
+                </button>
+                <button id="info-btn" class="info-btn">About</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Control Panel -->
+            <div class="panel control-panel">
+                <h2>Control Panel</h2>
+                
+                <!-- VM Creator -->
+                <div class="vm-creator">
+                    <h3>Create VM</h3>
+                    <div class="form-group">
+                        <label for="vm-name">VM Name</label>
+                        <input type="text" id="vm-name" placeholder="Enter VM name...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cpu-slider">CPU Cores</label>
+                        <div class="slider-container">
+                            <input type="range" id="cpu-slider" class="slider" min="1" max="8" value="2">
+                            <div class="slider-labels">
+                                <span>1</span>
+                                <span id="cpu-value">2</span>
+                                <span>8</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ram-slider">RAM (GB)</label>
+                        <div class="slider-container">
+                            <input type="range" id="ram-slider" class="slider" min="1" max="16" value="4">
+                            <div class="slider-labels">
+                                <span>1</span>
+                                <span id="ram-value">4</span>
+                                <span>16</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="disk-slider">Disk (GB)</label>
+                        <div class="slider-container">
+                            <input type="range" id="disk-slider" class="slider" min="10" max="500" value="100" step="10">
+                            <div class="slider-labels">
+                                <span>10</span>
+                                <span id="disk-value">100</span>
+                                <span>500</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="create-vm" class="action-btn create-btn">
+                        <span class="btn-icon">+</span>
+                        Create VM
+                    </button>
+                </div>
+                
+                <!-- VM Manager -->
+                <div class="vm-manager">
+                    <h3>Manage VMs</h3>
+                    <div class="vm-selector-container">
+                        <select id="vm-selector" disabled>
+                            <option value="">Select a VM</option>
+                        </select>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="start-vm" class="action-btn start-btn" disabled>
+                            <span class="btn-icon">▶</span>
+                            Start
+                        </button>
+                        <button id="pause-vm" class="action-btn pause-btn" disabled>
+                            <span class="btn-icon">⏸</span>
+                            Pause
+                        </button>
+                        <button id="suspend-vm" class="action-btn suspend-btn" disabled>
+                            <span class="btn-icon">💾</span>
+                            Suspend
+                        </button>
+                        <button id="destroy-vm" class="action-btn destroy-btn" disabled>
+                            <span class="btn-icon">×</span>
+                            Destroy
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dynamic Resource Management -->
+                <div class="resource-manager">
+                    <h3>Resource Management</h3>
+                    <div class="form-group">
+                        <label for="dynamic-cpu-slider">CPU Cores</label>
+                        <div class="slider-container">
+                            <input type="range" id="dynamic-cpu-slider" class="slider dynamic-slider" min="1" max="8" value="2" disabled>
+                            <div class="slider-labels">
+                                <span>1</span>
+                                <span id="dynamic-cpu-value">2</span>
+                                <span>8</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dynamic-ram-slider">RAM (GB)</label>
+                        <div class="slider-container">
+                            <input type="range" id="dynamic-ram-slider" class="slider dynamic-slider" min="1" max="16" value="4" disabled>
+                            <div class="slider-labels">
+                                <span>1</span>
+                                <span id="dynamic-ram-value">4</span>
+                                <span>16</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dynamic-disk-slider">Disk (GB)</label>
+                        <div class="slider-container">
+                            <input type="range" id="dynamic-disk-slider" class="slider dynamic-slider" min="10" max="500" value="100" step="10" disabled>
+                            <div class="slider-labels">
+                                <span>10</span>
+                                <span id="dynamic-disk-value">100</span>
+                                <span>500</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="apply-resources" class="action-btn apply-btn" disabled>
+                        <span class="btn-icon">✓</span>
+                        Apply Changes
+                    </button>
+                </div>
+
+                <!-- Resource Load Simulation -->
+                <div class="load-simulator">
+                    <h3>Load Simulation</h3>
+                    <div class="action-buttons">
+                        <button id="increase-load" class="action-btn load-btn" disabled>
+                            <span class="btn-icon">⬆</span>
+                            Increase Load
+                        </button>
+                        <button id="decrease-load" class="action-btn load-btn" disabled>
+                            <span class="btn-icon">⬇</span>
+                            Decrease Load
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Host Visualization -->
+            <div class="panel host-panel">
+                <div class="host-header">
+                    <h2>Host System</h2>
+                    <div class="host-resources-summary">
+                        <div class="resource-summary">
+                            <div class="resource-icon cpu-icon"></div>
+                            <span id="cpu-summary">0/8 cores</span>
+                        </div>
+                        <div class="resource-summary">
+                            <div class="resource-icon ram-icon"></div>
+                            <span id="ram-summary">0/16 GB</span>
+                        </div>
+                        <div class="resource-summary">
+                            <div class="resource-icon disk-icon"></div>
+                            <span id="disk-summary">0/500 GB</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="host-visualization">
+                    <div class="physical-resources">
+                        <div class="resource-pool">
+                            <h4>CPU Pool</h4>
+                            <div class="resource-blocks" id="cpu-blocks"></div>
+                        </div>
+                        <div class="resource-pool">
+                            <h4>RAM Pool</h4>
+                            <div class="resource-blocks" id="ram-blocks"></div>
+                        </div>
+                        <div class="resource-pool">
+                            <h4>Disk Pool</h4>
+                            <div class="resource-blocks" id="disk-blocks"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="hypervisor-layer">
+                        <div class="hypervisor-container">
+                            <div class="hypervisor-glow"></div>
+                            <span class="hypervisor-label">Hypervisor</span>
+                        </div>
+                        <div class="hypervisor-activity" id="hypervisor-activity"></div>
+                    </div>
+                    
+                    <div class="vms-container" id="vms-container">
+                        <div class="empty-state">
+                            <p>No virtual machines running</p>
+                            <p>Configure and create a VM to start</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Monitoring Panel -->
+            <div class="panel monitoring-panel">
+                <h2>Monitoring</h2>
+                
+                <div class="resource-charts">
+                    <h3>Resource Usage</h3>
+                    <div class="chart-container">
+                        <canvas id="resource-chart" width="300" height="200"></canvas>
+                    </div>
+                </div>
+                
+                <div class="log-section">
+                    <h3>Activity Log</h3>
+                    <div class="logs-container" id="logs"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Info Modal -->
+    <div class="modal" id="info-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>About Virtualization Simulator</h2>
+            <div class="info-section">
+                <p>This interactive simulator demonstrates how hypervisors manage virtual machines and allocate system resources.</p>
+                
+                <h3>What is Virtualization?</h3>
+                <p>Virtualization is a technology that allows you to create multiple simulated environments or dedicated resources from a single physical hardware system. Software called a hypervisor manages these virtual environments, known as virtual machines (VMs).</p>
+                
+                <h3>Key Concepts Visualized</h3>
+                <ul>
+                    <li><strong>Resource Allocation</strong>: How CPU, RAM, and disk resources are distributed among VMs</li>
+                    <li><strong>VM Lifecycle</strong>: Creating, starting, pausing, suspending, and destroying VMs</li>
+                    <li><strong>Dynamic Resource Management</strong>: How resources can be adjusted for running VMs</li>
+                    <li><strong>Resource Contention</strong>: How VMs compete for limited resources</li>
+                </ul>
+                
+                <h3>Simulator Features</h3>
+                <ul>
+                    <li>Create and manage multiple VMs with custom resource allocations</li>
+                    <li>Visualize resource usage and allocation in real-time</li>
+                    <li>Monitor system activities through the activity log</li>
+                    <li>Dynamically adjust resources for running VMs</li>
+                    <li>Simulate load changes to see resource management in action</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resource animation containers -->
+    <div class="animation-container" id="animation-container"></div>
+    <div class="hypervisor-processing-container" id="hypervisor-processing"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
